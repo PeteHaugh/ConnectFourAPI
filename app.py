@@ -1,15 +1,15 @@
 import flask
 from flask import request, jsonify
 import json
-from connect_four import game_is_over, has_won, make_board, minimax, select_space
-from script import my_evaluation_board, play_game
+from connect_four import evaluate_board, game_is_over, has_won, make_board, minimax, select_space
+from script import my_evaluation_board
 
 # PORT 5000
 
 my_board = make_board()
 
 app = flask.Flask(__name__)
-#app.config["DEBUG"] = True
+app.config["DEBUG"] = True
 
 @app.route('/')
 def home():
@@ -18,8 +18,8 @@ def home():
 #route to reset the board and start a new game
 @app.route('/start', methods=['GET'])
 def api_start():
-    #reset_board(my_board)
-    return 'New game!'
+    my_board = make_board()
+    return f'{my_board}'
     
 #route to move the piece for the player two to the desired column number,
 #if the column is invalid return invalid else the move is valid,
@@ -33,18 +33,14 @@ def make_move(col):
 
     #The "O" player finds their best move
     valid = select_space(my_board, move, "O") #IF true it worked, if false it is invalid
-
-    # if not valid:
-    #     return "invalid move"
-    
     
     #Check if you've won
 
     if not game_is_over(my_board):
      #The "X" player finds their best move.
-        result = minimax(my_board, True, 4, -float("Inf"), float("Inf"), my_evaluation_board)
+        result = minimax(my_board, True, 4, -float("Inf"), float("Inf"), evaluate_board)
         select_space(my_board, result[1], "X")
-        return f'{result[1]}'
+        return f'{my_board}'
     elif has_won(my_board, "X"):
         return "X won!"
     elif has_won(my_board, "O"):

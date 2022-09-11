@@ -2,27 +2,6 @@ from copy import deepcopy
 import random
 random.seed()
 
-# def print_board(board):
-#     print()
-#     print(' ', end='')
-#     for x in range(1, len(board) + 1):
-#         print(' %s  ' % x, end='')
-#     print()
-
-#     print('+---+' + ('---+' * (len(board) - 1)))
-
-#     for y in range(len(board[0])):
-#         print('|   |' + ('   |' * (len(board) - 1)))
-
-#         print('|', end='')
-#         for x in range(len(board)):
-#             print(' %s |' % board[x][y], end='')
-#         print()
-
-#         print('|   |' + ('   |' * (len(board) - 1)))
-
-#         print('+---+' + ('---+' * (len(board) - 1)))
-
 def select_space(board, column, player):
     if not move_is_valid(board, column):
         return False
@@ -264,3 +243,7 @@ def make_board():
     for x in range(7):
         new_game.append([' '] * 6)
     return new_game
+
+
+
+
