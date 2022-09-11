@@ -2,7 +2,6 @@ import flask
 from flask import request, jsonify
 import json
 from connect_four import evaluate_board, game_is_over, has_won, make_board, minimax, select_space
-from script import my_evaluation_board
 
 # PORT 5000
 
