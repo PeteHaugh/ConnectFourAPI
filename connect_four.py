@@ -8,7 +8,7 @@ def select_space(board, column, player):
     if player != "X" and player != "O":
         return False
     for y in range(len(board[0])-1, -1, -1):
-        if board[column-1][y] == ' ':
+        if board[column-1][y] == 0:
             board[column-1][y] = player
             return True
     return False
@@ -16,7 +16,7 @@ def select_space(board, column, player):
 def board_is_full(board):
     for x in range(len(board)):
         for y in range(len(board[0])):
-            if board[x][y] == ' ':
+            if board[x][y] == 0:
                 return False
     return True
 
@@ -24,7 +24,7 @@ def move_is_valid(board, move):
     if move < 1 or move > (len(board)):
         return False
 
-    if board[move-1][0] != ' ':
+    if board[move-1][0] != 0:
         return False
 
     return True
@@ -89,7 +89,7 @@ def count_streaks(board, symbol):
                 for i in range(4):
                     if board[col + i][row] == symbol:
                         num_in_streak += 1
-                    elif board[col + i][row] != " ":
+                    elif board[col + i][row] != 0:
                         num_in_streak = 0
                         break
                 count += num_in_streak
@@ -99,7 +99,7 @@ def count_streaks(board, symbol):
                 for i in range(4):
                     if board[col - i][row] == symbol:
                         num_in_streak += 1
-                    elif board[col - i][row] != " ":
+                    elif board[col - i][row] != 0:
                         num_in_streak = 0
                         break
                 count += num_in_streak
@@ -109,7 +109,7 @@ def count_streaks(board, symbol):
                 for i in range(4):
                     if board[col + i][row - i] == symbol:
                         num_in_streak += 1
-                    elif board[col + i][row - i] != " ":
+                    elif board[col + i][row - i] != 0:
                         num_in_streak = 0
                         break
                 count += num_in_streak
@@ -119,7 +119,7 @@ def count_streaks(board, symbol):
                 for i in range(4):
                     if board[col + i][row + i] == symbol:
                         num_in_streak += 1
-                    elif board[col + i][row + i] != " ":
+                    elif board[col + i][row + i] != 0:
                         num_in_streak = 0
                         break
                 count += num_in_streak
@@ -129,7 +129,7 @@ def count_streaks(board, symbol):
                 for i in range(4):
                     if board[col - i][row + i] == symbol:
                         num_in_streak += 1
-                    elif board[col - i][row + i] != " ":
+                    elif board[col - i][row + i] != 0:
                         num_in_streak = 0
                         break
                 count += num_in_streak
@@ -139,7 +139,7 @@ def count_streaks(board, symbol):
                 for i in range(4):
                     if board[col - i][row - i] == symbol:
                         num_in_streak += 1
-                    elif board[col - i][row - i] != " ":
+                    elif board[col - i][row - i] != 0:
                         num_in_streak = 0
                         break
                 count += num_in_streak
@@ -149,7 +149,7 @@ def count_streaks(board, symbol):
                 for i in range(4):
                     if board[col - i][row + i] == symbol:
                         num_in_streak += 1
-                    elif board[col - i][row + i] != " ":
+                    elif board[col - i][row + i] != 0:
                         num_in_streak = 0
                         break
                 count += num_in_streak
@@ -166,7 +166,7 @@ def count_streaks(board, symbol):
                 if row - i > 0:
                     if board[col][row - i] == symbol:
                         num_in_streak += 1
-                    elif board[col][row - i] == " ":
+                    elif board[col][row - i] == 0:
                         break
                     else:
                         num_in_streak == 0
@@ -212,38 +212,18 @@ def minimax(input_board, is_maximizing, depth, alpha, beta, eval_function):
         break
     return [best_value, best_move]
 
-def play_game(ai):
-    BOARDWIDTH = 7
-    BOARDHEIGHT = 6
-    board = []
-    for x in range(BOARDWIDTH):
-      board.append([' '] * BOARDHEIGHT)
-    while not game_is_over(board):
-        #print_board(board)
-        moves = available_moves(board)
-        print("Available moves: " , moves)
-        choice = 100
-        good_move = False
-        while not good_move:
-            choice = input("Select a move:\n")
-            try:
-                move = int(choice)
-            except ValueError:
-                continue
-            if move in moves:
-                good_move = True
-        select_space(board, int(choice), "X")
-        if not game_is_over(board):
-          result = minimax(board, False, ai, -float("Inf"), float("Inf"))
-          print("Computer chose: ", result[1])
-          select_space(board, result[1], "O")
-
 def make_board():
-    new_game = []
+    board = []
     for x in range(7):
-        new_game.append([' '] * 6)
-    return new_game
+        board.append([0] * 6)
+    return board
 
+def reset_board(board):
+	rows = len(board)
+	columns = len(board[0])
+	for row in range(rows):
+		for column in range(columns):
+			board[row][column] = 0
 
 
 
