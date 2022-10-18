@@ -10,6 +10,10 @@ board = make_board()
 
 app = flask.Flask(__name__)
 CORS(app)
+@app.route('/')
+def hello_world():
+    return 'Hello World!'
+
 
 # route to reset the board and start a new game
 @app.route('/start', methods=['GET'])
