@@ -10,6 +10,8 @@ board = make_board()
 
 app = flask.Flask(__name__)
 CORS(app)
+
+
 @app.route('/')
 def hello_world():
     return 'Hello World!'
@@ -60,9 +62,5 @@ def make_move(col):
     return jsonify(board, f"{status}")
 
 
-def main():
-    app.run(host="0.0.0.0", port="5000", debug=True)
-
-
 if __name__ == "__main__":
-    main()
+    app.run()
