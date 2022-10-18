@@ -1,1 +1,1 @@
-web: gunicorn ConnectFourAPI : app
+web: gunicorn app : app
