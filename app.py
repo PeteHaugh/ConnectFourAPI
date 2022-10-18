@@ -1,5 +1,6 @@
+import os
 import flask
-from flask import request, jsonify
+from flask import request, jsonify, send_from_directory
 from flask_cors import CORS
 import json
 from connect_four import evaluate_board, game_is_over, has_won, make_board, minimax, select_space, reset_board
@@ -15,6 +16,11 @@ CORS(app)
 @app.route('/')
 def hello_world():
     return 'Hello World!'
+
+@app.route('/favicon.ico')
+def favicon():
+    return send_from_directory(os.path.join(app.root_path, 'static'),
+                               'favicon.ico', mimetype='image/vnd.microsoft.icon')
 
 
 # route to reset the board and start a new game
